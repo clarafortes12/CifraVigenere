@@ -1,24 +1,58 @@
 class Decifra:
-    def __init__(self):#, file):
-        #self.arquivo = file
-        self.senha = "senhaBoa"
-        self.textoOriginal = "lifae RE qrusbuee"
+    def __init__(self):
+        self.nomeArquivo = ""
+        self.chave = ""
+        self.textoOriginal = ""
         self.textoCifrado = ""
     
-    def getArquivo():
-        print("pega arquivo cifrado")
-        print("pega arquivo chave")
+    def getArquivo(self):
+        arquivo = input("Insira o caminho completo do arquivo .txt que deseja decifrar: ")
+        
+        nome_arquivo = arquivo[0:-4]
+        cont_barra = 0
+        for i in range(len(arquivo)):
+            if(arquivo[i]=='/' or arquivo[i]=="\\"):
+                cont_barra = i
 
+        nome_arquivo = nome_arquivo[cont_barra+1:]
+        
+        self.nomeArquivo = nome_arquivo
+        file_leitura = open(arquivo, 'r')
+        
+        file_leitura.seek(0,0)
+        text = ""
+        
+        linha = file_leitura.readline()
+        while not linha == '':
+            text += linha 
+            linha = file_leitura.readline()
+        
+        self.textoCifrado = text
+        
+        file_leitura.close()
+
+    def getChave(self):
+        arquivo = input("Insira o caminho completo do arquivo .txt que contém a senha OU Insira a senha: ")
+        
+        if(arquivo.find(".txt") == -1):
+            self.chave = arquivo
+        else:
+            file_leitura = open(arquivo, 'r')
+            file_leitura.seek(0,0)    
+            
+            self.chave = file_leitura.readline()
+            
+            file_leitura.close()
+    
     def decifrar(self):
         print("fazer o decifra do texto")
-        #Colocar texto em textoOriginal
-        self.textoCifrado = ""
-        textoRef = self.textoOriginal.upper()
-        self.senha = self.senha.upper()
+        self.textoOriginal = ""
+        textoRef = self.textoCifrado.upper()
+        self.chave = self.chave.upper()
         refA = ord('A')
         i = 0
         for letra in textoRef:
-            increm = ord(self.senha[i%len(self.senha)]) - refA
+            increm = ord(self.chave[i%len(self.senha)]) - refA
             if (ord(letra) >= ord('A')) and (ord(letra) <= ord('Z')):
                 cod = ((ord(letra) - refA) - increm) % 26
                 cod += refA
@@ -28,14 +62,13 @@ class Decifra:
             i += 1
             
     def decifrarCase(self):
-        #Colocar texto em textoOriginal
-        self.textoCifrado = ""
-        self.senha = self.senha.upper()
+        self.textoOriginal = ""
+        self.chave = self.chave.upper()
         refA = ord('A')
         refa = ord('a')
         i = 0
-        for letra in self.textoOriginal:
-            increm = ord(self.senha[i%len(self.senha)]) - refA
+        for letra in self.textoCifrado:
+            increm = ord(self.chave[i%len(self.chave)]) - refA
             if (ord(letra) >= ord('A')) and (ord(letra) <= ord('Z')):
                 cod = ((ord(letra) - refA) - increm) % 26
                 cod += refA
@@ -44,16 +77,15 @@ class Decifra:
                 cod += refa
             else:
                 cod = ord(letra)
-            self.textoCifrado += chr(cod)
+            self.textoOriginal += chr(cod)
             i += 1
     
     def save(self):
-        print("salvar o arquivo original")
+        if(self.nomeArquivo.find("Cifrado") == -1):
+            arquivo = self.nomeArquivo
+        else:
+            arquivo = self.nomeArquivo.split("Cifrado")[0]
         
-        
-obj = Decifra()
-
-obj.decifrar()
-print(obj.textoCifrado)
-obj.decifrarCase()
-print(obj.textoCifrado)
+        file_crifrado = open(arquivo+'Original.txt', 'w')
+        file_crifrado.write(self.textoOriginal)
+        file_crifrado.close()
