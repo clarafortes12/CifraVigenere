@@ -17,7 +17,7 @@ class Cifra:
         nome_arquivo = nome_arquivo[cont_barra+1:]
         
         self.nomeArquivo = nome_arquivo
-        file_leitura = open(arquivo, 'r')
+        file_leitura = open(arquivo, 'r', encoding='UTF8')
         
         file_leitura.seek(0,0)
         text = ""
