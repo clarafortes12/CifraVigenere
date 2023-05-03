@@ -1,4 +1,7 @@
 class Ataque:
+    freq_ingles = [8.167, 1.492, 2.782, 4.253, 12.702, 2.228, 2.015, 6.094, 6.966, 0.153, 0.772, 4.025, 2.406, 6.749, 7.507, 1.929, 0.095, 5.987, 6.327, 9.056, 2.758, 0.978, 2.360, 0.150, 1.974, 0.074]
+    freq_portugues = [14.63, 1.04, 3.88, 4.99, 12.57, 1.02, 1.30, 1.28, 6.18, 0.40, 0.02, 2.78, 4.74, 5.05, 10.73, 2.52, 1.20, 6.53, 7.81, 4.34, 4.63, 1.67, 0.01, 0.21, 0.01, 0.47] 
+
     def __init__(self):
         self.nomeArquivo = ""
         self.chave = ""
@@ -67,7 +70,7 @@ class Ataque:
         while y:
             x, y = y, x % y
         
-        if(x != 1 and x != 2):
+        if(x != 1):
             if x in dic:
                 dic[x] += 1
             else:
@@ -90,7 +93,12 @@ class Ataque:
         for j in range(1, len(distance)):
             for i in range(j+1, len(distance)):
                 self.mdc(distance[j], distance[i], mdcDic)
-                
+        
+        #Mostrar Distancias
+        #Mostrar MDC
+        #Mostrar Selecionada tirando o 2
+        #Pedir Escolha
+        
         self.frequencia["mmcDistancia"] = max(mdcDic, key=mdcDic.get)
     
     def findChave(self):
