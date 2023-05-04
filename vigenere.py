@@ -95,3 +95,39 @@ class Vigenere:
             self.textoOriginal += chr(cod)
             i += 1
     
+    def vigenere_generico(self, cif_dec, caseMantido = True): #cif_dec - (1, -1) responsável por cifrar ou decifrar, respectivamente
+        self.textoOriginal = ""
+        self.chave = self.chave.upper()
+        refA = ord('A')
+        refa = ord('a')
+        i = 0
+        
+        textoResult = ""
+        
+        if cif_dec == 1:
+            textoRef = self.textoOriginal
+        elif cif_dec == -1:
+            textoRef = self.textoCifrado
+            
+        if not caseMantido:
+            textoRef = textoRef.upper()
+        
+        for letra in self.textoRef:
+            increm = cif_dec*(ord(self.chave[i%len(self.chave)]) - refA)
+            if (ord(letra) >= ord('A')) and (ord(letra) <= ord('Z')):
+                cod = ((ord(letra) - refA) + increm) % 26
+                cod += refA
+                i += 1
+            elif (ord(letra) >= ord('a')) and (ord(letra) <= ord('z')):
+                cod = ((ord(letra) - refa) + increm) % 26
+                cod += refa
+                i += 1
+            else:
+                cod = ord(letra)
+                
+            textoResult += chr(cod)
+            
+        if cif_dec == 1:
+            self.textoCifrado = textoResult
+        elif cif_dec == -1:
+            self.textoOriginal = textoResult

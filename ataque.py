@@ -52,7 +52,7 @@ class Ataque:
         
         if self.textoAjustado != "":
             for j in range(2,5):
-                for i in range(len(self.textoAjustado)- j + 1):
+                for i in range(len(self.textoAjustado) - j + 1):
                     bloco = self.textoAjustado[i:i+j]
                     
                     if bloco in Repeticoes:
