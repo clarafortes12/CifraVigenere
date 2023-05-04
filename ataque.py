@@ -11,32 +11,6 @@ class Ataque:
         self.frequencia = {"Bloco":"", "Repeticoes": 0}
         self.numLetras = 0
     
-    def getArquivo(self):
-        arquivo = input("Insira o caminho completo do arquivo .txt que deseja atacar: ")
-        
-        nome_arquivo = arquivo[0:-4]
-        cont_barra = 0
-        for i in range(len(arquivo)):
-            if(arquivo[i]=='/' or arquivo[i]=="\\"):
-                cont_barra = i
-
-        nome_arquivo = nome_arquivo[cont_barra+1:]
-        
-        self.nomeArquivo = nome_arquivo
-        file_leitura = open(arquivo, 'r', encoding='UTF8')
-        
-        file_leitura.seek(0,0)
-        text = ""
-        
-        linha = file_leitura.readline()
-        while not linha == '':
-            text += linha 
-            linha = file_leitura.readline()
-        
-        self.textoCifrado = text
-        
-        file_leitura.close()
-    
     def ajustaTexto(self):
         texto = ""
         textoRef = self.textoCifrado.upper()
@@ -139,7 +113,6 @@ class Ataque:
         file_crifrado.close()
 
 obj = Ataque()
-obj.getArquivo();
-obj.ajustaTexto();
-obj.getFrequence();
-obj.findDistances();
+obj.ajustaTexto()
+obj.getFrequence()
+obj.findDistances()
