@@ -8,7 +8,8 @@ class Ataque:
         self.textoOriginal = ""
         self.textoCifrado = ""
         self.textoAjustado = ""
-        self.frequencia = {"Bloco":"", "Repeticoes": 0, "mmcDistancia": 0}
+        self.frequencia = {"Bloco":"", "Repeticoes": 0}
+        self.numLetras = 0
     
     def getArquivo(self):
         arquivo = input("Insira o caminho completo do arquivo .txt que deseja atacar: ")
@@ -84,7 +85,7 @@ class Ataque:
             bloco = self.textoAjustado[i:i+len(self.frequencia["Bloco"])]
             
             if(self.frequencia["Bloco"] == bloco):
-                distance.append(cont-1)
+                distance.append(cont+1)
                 cont = 0
             else:
                 cont += 1
@@ -94,12 +95,25 @@ class Ataque:
             for i in range(j+1, len(distance)):
                 self.mdc(distance[j], distance[i], mdcDic)
         
-        #Mostrar Distancias
-        #Mostrar MDC
-        #Mostrar Selecionada tirando o 2
-        #Pedir Escolha
+        mdcComum = max(mdcDic, key=mdcDic.get)
         
-        self.frequencia["mmcDistancia"] = max(mdcDic, key=mdcDic.get)
+        print("\n\nAs distancias encontradas para " + "'" +self.frequencia["Bloco"] + "' são: " + str(distance))
+        print("Os MDCs entre as distâncias e suas respectivas frequências são: " + str(mdcDic))
+        print("\n\nO tamanho da palavra sujerida é: "+ str(mdcComum))
+        
+        while (True):
+            operacao = input("Qual tamanho deseja usar (maior ou igual a 2)? \n\n 0 - Se quiser manter sujestão \n")
+            
+            if (operacao.isdigit() and int(operacao) == 0):
+                self.numLetras = mdcComum
+                break;
+            
+            elif (operacao.isdigit() and int(operacao) >= 2):  
+                self.numLetras = int(operacao);
+                break;
+            
+            else:
+                print("Insira um valor válido")
     
     def findChave(self):
         print("descobrir a chave - Salvar com a de salvar do chaves.py");
@@ -129,4 +143,3 @@ obj.getArquivo();
 obj.ajustaTexto();
 obj.getFrequence();
 obj.findDistances();
-print(obj.frequencia)
