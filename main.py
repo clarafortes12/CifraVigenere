@@ -1,6 +1,5 @@
-from cifra import Cifra
-from decifra import Decifra
-from ataque import Ataque
+from auxiliar import Auxiliar
+from vigenere import Vigenere
 
 inicio = True
 
@@ -12,10 +11,15 @@ while inicio:
         if(operacao == 1):
             inicio = False
             
-            cifra = Cifra()
-            cifra.getArquivo()
-            cifra.getChave()
+            auxiliar = Auxiliar()
+            cifra = Vigenere()
             
+            auxiliar.getArquivo(operacao)
+            cifra.nomeArquivo = auxiliar.nomeArquivo
+            cifra.textoOriginal = auxiliar.textoArquivo
+            
+            cifra.getChave()
+
             inicioCifra = True
             
             while inicioCifra:
@@ -26,46 +30,52 @@ while inicio:
                     operacaoCifra = int(operacaoCifra)
                     if(operacaoCifra == 1):
                         inicioCifra = False
-                        cifra.cifrar()
+                        cifra.vigenere_generico(operacao, False)
                     elif(operacaoCifra == 2):
                         inicioCifra = False
-                        cifra.cifrarCase()
+                        cifra.vigenere_generico(operacao)
+                    
                     else:
                         print("Selecione uma opção válida \n")
                 else:
                         print("Selecione uma opção válida \n")
             
-            cifra.save()
-
+            auxiliar.textoArquivo = cifra.textoCifrado
+            auxiliar.saveArquivo(operacao, auxiliar.nomeArquivo, auxiliar.textoArquivo)
         elif(operacao == 2):
             inicio = False
             
-            decifra = Decifra()
-            decifra.getArquivo()
+            auxiliar = Auxiliar()
+            decifra = Vigenere()
+            
+            auxiliar.getArquivo(operacao)
+            decifra.nomeArquivo = auxiliar.nomeArquivo
+            decifra.textoCifrado = auxiliar.textoArquivo
+            
             decifra.getChave()
+
+            inicioCifra = True
             
-            inicioDecifra = True
-            
-            while inicioDecifra:
+            while inicioCifra:
                 
-                operacaoDecifra = input("Que operação deseja realizar?\n\n1- Manter maiúsculo e minúsculo \n2- Não precisa manter\n\n")
+                operacaoCifra = input("Que operação deseja realizar?\n\n1- Manter maiúsculo e minúsculo \n2- Não precisa manter\n\n")
                 
-                if(operacaoDecifra.isdigit()):
+                if(operacaoCifra.isdigit()):
+                    operacaoCifra = int(operacaoCifra)
+                    if(operacaoCifra == 1):
+                        inicioCifra = False
+                        decifra.vigenere_generico(operacao, False)
+                    elif(operacaoCifra == 2):
+                        inicioCifra = False
+                        decifra.vigenere_generico(operacao)
                     
-                    operacaoDecifra = int(operacaoDecifra)
-                    
-                    if(operacaoDecifra == 1):
-                        inicioDecifra = False
-                        decifra.decifrar()
-                    elif(operacaoDecifra == 2):
-                        inicioDecifra = False
-                        decifra.decifrarCase()
                     else:
                         print("Selecione uma opção válida \n")
                 else:
                         print("Selecione uma opção válida \n")
             
-            decifra.save()
+            auxiliar.textoArquivo = decifra.textoOriginal
+            auxiliar.saveArquivo(operacao, auxiliar.nomeArquivo, auxiliar.textoArquivo)
         
         elif(operacao == 3):
             print("Atacar")

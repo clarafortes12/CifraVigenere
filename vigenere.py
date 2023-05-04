@@ -24,8 +24,8 @@ class Vigenere:
             else:
                 print("\nInsira uma senha sem espaço de contendo apenas letras \n")
 
-    def vigenere_generico(self, cif_dec, caseMantido = True): #cif_dec - (1, -1) responsável por cifrar ou decifrar, respectivamente
-        self.textoOriginal = ""
+    def vigenere_generico(self, cif_dec, caseMantido = True): #cif_dec - (1, 2) responsável por cifrar ou decifrar, respectivamente
+        
         self.chave = self.chave.upper()
         refA = ord('A')
         refa = ord('a')
@@ -34,15 +34,17 @@ class Vigenere:
         textoResult = ""
         
         if cif_dec == 1:
+            auxMult = 1
             textoRef = self.textoOriginal
-        elif cif_dec == -1:
+        elif cif_dec == 2:
+            auxMult = -1
             textoRef = self.textoCifrado
             
         if not caseMantido:
             textoRef = textoRef.upper()
         
-        for letra in self.textoRef:
-            increm = cif_dec*(ord(self.chave[i%len(self.chave)]) - refA)
+        for letra in textoRef:
+            increm = auxMult*(ord(self.chave[i%len(self.chave)]) - refA)
             if (ord(letra) >= ord('A')) and (ord(letra) <= ord('Z')):
                 cod = ((ord(letra) - refA) + increm) % 26
                 cod += refA
@@ -58,5 +60,5 @@ class Vigenere:
             
         if cif_dec == 1:
             self.textoCifrado = textoResult
-        elif cif_dec == -1:
+        elif cif_dec == 2:
             self.textoOriginal = textoResult
