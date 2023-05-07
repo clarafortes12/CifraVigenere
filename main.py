@@ -1,5 +1,6 @@
 from auxiliar import Auxiliar
 from vigenere import Vigenere
+from ataque import Ataque
 
 inicio = True
 
@@ -78,8 +79,19 @@ while inicio:
             auxiliar.saveArquivo(operacao, auxiliar.nomeArquivo, auxiliar.textoArquivo)
         
         elif(operacao == 3):
-            print("Atacar")
             inicio = False
+            
+            auxiliar = Auxiliar()
+            ataque = Ataque()
+            
+            auxiliar.getArquivo(operacao)
+            ataque.nomeArquivo = auxiliar.nomeArquivo
+            ataque.textoCifrado = auxiliar.textoArquivo
+            
+            ataque.ajustaTexto()
+            ataque.getFrequence()
+            ataque.findDistances()
+            ataque.findChave()
         else:
             print("Selecione uma opção viável \n");
     else:
