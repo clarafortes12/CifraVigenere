@@ -1,3 +1,9 @@
+#   SEGURANÇA COMPUTACIONAL
+#   TRABALHO 1
+#   MARIA CLARA OLIVEIRA FORTES -       19/0017503
+#   THIAGO CARDOSO PINHEIRO DIAS PAIS - 16/0146372
+#
+
 from auxiliar import Auxiliar
 from vigenere import Vigenere
 from ataque import Ataque
